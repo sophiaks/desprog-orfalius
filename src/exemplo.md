@@ -1,78 +1,84 @@
-Título
-======
+Algoritmo de Rabin-Karp
+=============
 
-Subtítulo
----------
+Introdução
+----------
+* O que é o algoritmo
+* Como ele funciona em linhas gerais
+* Exemplo e Pergunta
+* Encontramos um vídeo de uma explicação nada intuitiva: <https://bit.ly/3uHwsdE>
 
-Para criar um parágrafo, basta escrever um texto contínuo, sem pular linhas.
+??? Exercício
 
-Você também pode criar
+Vamos ver se você entendeu: se nossa string de entrada é `INSPERCOMP`, e nosso padrão é COM, qual índice nosso algoritmo devolve?
 
-1. listas;
+::: Gabarito
+ERROU BABACA
+:::
 
-2. ordenadas,
+???
+  
+Rolling Hash
+---------------
+* Explicação básica
 
-assim como
+Dar outro exemplo com AB e BA (strings com o mesmo hash nesse caso) e perguntar
+??? Exercício
 
-* listas;
+O que tem de errado com essa implementação? - INTRODUZIR Las Vegas vs. Monte Carlo
 
-* não-ordenadas
+::: Gabarito
+Strings diferentes - mesmo hash
+:::
 
-e imagens. Lembre que todas as imagens devem estar em uma subpasta *img*.
+???
 
-![](logo.png)
+FORMULA DO HASH LOUQUINHO
 
-Para tabelas, usa-se a [notação do
-MultiMarkdown](https://fletcher.github.io/MultiMarkdown-6/syntax/tables.html),
-que é muito flexível. Vale a pena abrir esse link para saber todas as
-possibilidades.
+??? Exercício
+``` py
+# calculo do Hash
+for i in range(len(padrao)):
+    p += (ord(padrao[i]))
+    t += (ord(txt[i]))
+``` 
+Assustador o bichin né? Qual deles deveríamos usar?
 
-| coluna a | coluna b |
+::: Gabarito
+EXPLICAR Las Vegas vs. Monte Carlo
+:::
+
+???
+
+
+* Tabela ASCII
+* Las Vegas vs. Monte Carlo (comparar os dois)
+
+|   CHAR   |   ASCII  |
 |----------|----------|
-| 1        | 2        |
+| A        | 231      |
 
-Ao longo de um texto, você pode usar *itálico*, **negrito**, {red}(vermelho) e
-[[tecla]]. Também pode usar uma equação LaTeX: $f(n) \leq g(n)$. Se for muito
-grande, você pode isolá-la em um parágrafo.
-
-$$\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} \leq 1$$
-
-Para inserir uma animação, use `md ;` seguido do nome de uma pasta onde as
-imagens estão. Essa pasta também deve estar em *img*.
+Funcionamento
+--------------
+- Animaçãozinha
 
 ;bubble
 
-Você também pode inserir código, inclusive especificando a linguagem.
+Complexidade
+--------------
+Nos casos em que o padrão não se repete em todas as partes
+* Dicas - pensando que cada comparação é O(1), com N caracteres temos qual complexidade papapa
 
-``` py
-def f():
-    print('hello world')
-```
+Desafio
+--------------
+* IMPLEMENTA (vamos dar um pouquinho do código) - PYTHON pfpfpf
 
-``` c
-void f() {
-    printf("hello world\n");
-}
-```
 
-Se não especificar nenhuma, o código fica com colorização de terminal.
 
-```
-hello world
-```
-
+Ao longo de um texto, você pode usar *itálico*, **negrito**, {red}(vermelho) e
+[[tecla]]. Também pode usar uma equação LaTeX: $f(n) \leq g(n)$. Se for muito
+grande, você pode isolá-la em um parágrafo
 
 !!! Aviso
 Este é um exemplo de aviso, entre `md !!!`.
 !!!
-
-
-??? Exercício
-
-Este é um exemplo de exercício, entre `md ???`.
-
-::: Gabarito
-Este é um exemplo de gabarito, entre `md :::`.
-:::
-
-???
