@@ -110,7 +110,9 @@ Agora para a complexidade: dê uma pensada, caso tenhamos que varrer a string um
 Dica: utilize a animação para guiar seu raciocínio.
 
 ::: Gabarito
-A complexidade vai ser O(N). Esse é o melhor caso!
+|                   | melhor caso | caso médio | pior caso  |
+|===================|:-----------:|:----------:|:----------:|
+   **Rabin-Karp**   |   *$O(n)$*  |  *$O(n)$*  |  *$O(n²)$* |
 :::
 ???
 
