@@ -103,25 +103,60 @@ Monte Carlo: <https://en.wikipedia.org/wiki/Monte_Carlo_algorithm>;
 
 Las Vegas: <https://en.wikipedia.org/wiki/Las_Vegas_algorithm>
 
+Complexidade
+---------------
 
+A complexidade é um fator decisivo para a escolha do algoritmo *Rabin-Karp*. Como visto anteriormente, ele se difere de um algoritmo "bruto" justamente por usar técnicas de "*Rolling Hash*", evitando calcular o "Hash" para cada *string* analisada e logo não precisando comparar caractere por caractere (*char* por *char*).
 ??? Exercício
-Agora para a complexidade: dê uma pensada, caso tenhamos que varrer a string uma vez apenas, e cada função hash tem complexidade O(1), qual a complexidade do algoritmo nesse caso?
+Vamos "descobrir" a complexidade, considerando os parâmetros do exemplo:
+``` py
+texto = "INSPERCOMP"
+padrao = "COM"
+M = len(texto)  #  M = 10
+N = len(padrao) #  N = 3
+``` 
+Nesse caso, que representa basicamente a maioria, o algoritmo irá iterar algumas *X* vezes até o *Hash* da substring se igualar ao do padrão, depois, será iterado *Y* vezes para fazer o "check" *char* a *char*, do primeiro até o primeiro *char* diferente, se não houver nenhum *char* destoante, ele realizará esse loop N vezes. Após essa checagem, ele deve continuar iterando *Z* vezes até a string principal acabar. Seguindo o raciocínio, qual a complexidade nessa situação? 
 
-Dica: utilize a animação para guiar seu raciocínio.
+:::Dica
+Utilize a animação para guiar seu raciocínio.
+
+;primitivo
+
+:::
+::: Observação
+Não é necessário chegar a um resultado exato, mas pelo menos a ordem de complexidade do algoritmo em seu melhor/médio caso.
+:::
 
 ::: Gabarito
+A complexidade é linear *$O(13)$*, *$O(N+M)$*, de ordem *$O(n)$*.
+:::
+
+Agora, pensando no pior caso, temos que lembrar que isso acontece quando o padrão se repete todas vezes durante o texto. Por exemplo:
+``` py
+texto = "AAAAAAAAAA"
+padrao = "AAAA"
+M = len(texto)  #  M = 10
+N = len(padrao) #  N = 4
+``` 
+Esse é o pior caso, porém o cálculo de sua complexidade é bem mais trivial.
+::: Gabarito
+Uma vez que vão ter 4 iterações para todas *substrings* do texto, conclui-se que a complexidade é exponencial *$O(N*M)$*, de ordem *$O(n²)$*. 
+
+::: Tabela de Complexidades
 |                   | melhor caso | caso médio | pior caso  |
 |===================|:-----------:|:----------:|:----------:|
    **Rabin-Karp**   |   *$O(n)$*  |  *$O(n)$*  |  *$O(n²)$* |
 :::
 ???
 
-E o pior caso? O pior caso é 
+Desafio
+---------------
+Nessa seção final, é esperado que haja um desafio para que o aluno aplique os seus conhecimentos sobre o Rabin-Karp, ainda estamos fazendo um "brainstorming" de como podemos realizar isso... por enquanto só decidimos que o desafio vai ser em partes...
 
-??? Desafio
+??? Parte 1
 ``` py
 # calculo do Hash
-for i in range(len(padrao)):
+for i in range(len(padrao)): # IGNORAR ESSE CÓDIGO POR ENQUANTO
     p += (ord(padrao[i]))
     t += (ord(txt[i]))
 ``` 
