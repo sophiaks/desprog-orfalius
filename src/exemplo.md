@@ -37,11 +37,15 @@ Vamos primeiro imaginar como nós faríamos a procura de uma string de um jeito 
 
 ;primitivo
 
-E isso pode até parecer completamente OK e que não tem nada de errado. Mas agora imagine que nós quiséssemos achar a substring `md AAAAAAB` na string `md AAAAAAAAAAAAAAAAAAAAAAAB`. Complicado, o algoritmo iria fazer tantas comparações que ou ele iria demorar demais ou ia crashar, e nenhum desses casos parece ser interessante. 
+E isso pode até parecer completamente OK e que não tem nada de errado. Mas agora imagine que nós quiséssemos achar a substring `md AAAB` na string `md AAAAAAB`. Olha como isso ficaria:
+
+;AAAAB
+
+ Complicado, o algoritmo iria muitas comparações redunantes e repetidas, e isso não parece ser interessante. 
 
 Vamos mudar o método então. Em vez de comparar caractere por caractere entre as strings, vamos comparar os valores hash(i) das strings.
 
-Mas primeiro, pros que não sabem, vamos só definir o que é o valor hash. Cada caractere tem um valor decimal pré-definido (mas não necessariamente universal, existem diversos modos de calcular o hash de uma string), e a soma dos valores de cada caractere da string é o valor hash da string. Por exemplo, podemos usar os valores definidos na tabela ASCII:
+Mas primeiro vamos só definir o que é o valor hash. Cada caractere tem um valor decimal pré-definido (mas não necessariamente universal, existem diversos modos de calcular o hash de uma string), ou seja, vamos resumir a string a um valor, e a soma dos valores de cada caractere da string é o valor hash da string. Por exemplo, podemos usar os valores definidos na tabela ASCII:
 
 ![](ASCII.png)
 
@@ -57,11 +61,24 @@ hash(COM) = 67 + 79 + 77 = 223
 
 hash(COM) = 223
 
-A ideia de comparar hashs é justamente comparar o valor do hash do nosso padrão, ou seja, a substring `md COM`, com o hash cada substring no texto `md INSPERCOMP`, até acharmos o mesmo valor. 
+A ideia de comparar hashs é justamente comparar o valor do hash do nosso padrão, ou seja, a substring `md COM`, com o hash cada substring no texto `md INSPERCOMP`, até acharmos o mesmo valor.
 
-(Hashi eu vou fazer uma animação pra isso mas não deu tempo ainda)
+Mas espera aí, ficar fazendo o cálculo do hash de cada substring caractere por caractere não é igualmente trabalhoso a comparar cada caractere primitivamente?
 
-Mas espera aí, ficar fazendo o cálculo do hash de cada substring caractere por caractere não é igualmente trabalhoso a comparar cada caractere primitivamente? Sim!
+INSERIR ANIMATION
+
+??? Exercício
+
+Baseado na animação acima, pense em uma estratégia para que o algoritmo seja mais eficiente.
+
+Dica: a palavra chave é redundância.
+
+::: Gabarito
+A ideia central é, ao invés de calcular e recalcular os hashs em todas as iterações, como estamos resumindo a string a um número, podemos apenas substrair o primeiro termo, e somar o último. Enfim, o rolling hash.
+:::
+???
+
+
 
 Rolling Hash
 ---------------
@@ -118,7 +135,8 @@ E o pior caso? O pior caso é
 
 ??? Desafio
 ``` py
-# calculo do Hash
+txt = "akjh bvhqregrqyuguiedgfvuyeqrgyfucgeyrgfyregfuygrf8geoygfoaeygfuqgf8ur34grfgeuabhfuGEFP8Haship9fehufhyreeqfygefyegfyewfijhes8gfhtrbgvreqfhubqeyfugeqyfgq8rgf8oqrfyuq7hg9q87uhvg78ugfv7uhgqu87gqyhg7rq0hyg7qyhqg0h70rqgvq0fhvgqfv0vg"
+padrao = "Hashi"
 for i in range(len(padrao)):
     p += (ord(padrao[i]))
     t += (ord(txt[i]))
