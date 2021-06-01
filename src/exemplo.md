@@ -37,7 +37,34 @@ Vamos primeiro imaginar como nós faríamos a procura de uma string de um jeito 
 
 ;primitivo
 
-E isso pode até parecer completamente OK e que não tem nada de errado. Mas agora imagine que nós quiséssemos achar a substring `md AAAAAAB` na string `md AAAAAAAAAAAAAAAAAAAAAAAB`. Complicado, o algoritmo iria fazer tantas comparações que ou ele iria demorar demais ou ia crashar, e nenhum desses casos parece ser interessante. 
+E isso pode até parecer completamente OK e que não tem nada de errado. Mas agora imagine que nós quiséssemos achar a substring `md AAAB` na string `md AAAAAAB`. Olha como que isso seria:
+
+;AAAAB
+
+??? Exercício
+Então com isso podemos chegar no pseudocódigo seguinte:
+```
+n = tamanho do padrão
+m = tamanho do texto
+
+para cada substring de n caracteres do texto
+    para cada caractere no padrão
+        compara com o caractere na substring
+```
+Agora tente implementar esse pseudocódigo!
+::: Gabarito
+```py
+for i in len(m):
+    pat = txt[i:i+n]
+    for j in len(n):
+        if pat[j] != txt[j]:
+            return 0
+return 1
+``` 
+:::
+???
+
+Complicado, o algoritmo iria fazer tantas comparações que ele iria demorar demais da conta, e isso com o fator de que ambas as strings são pequenas. Se o computador tivesse que fazer esse processo com uma string de dezenas de caracteres num texto com centenas, nem pense.
 
 Vamos mudar o método então. Em vez de comparar caractere por caractere entre as strings, vamos comparar os valores hash(i) das strings.
 
@@ -45,23 +72,47 @@ Mas primeiro, pros que não sabem, vamos só definir o que é o valor hash. Cada
 
 ![](ASCII.png)
 
-Para calcular o valor hash de `md COM`, por exemplo, calcularíamos o valor de cada caractere de acordo com os seus valores decimais na tabela ASCII e somaríamos:
+Para calcular o valor hash de `md AAAB`, por exemplo, calcularíamos o valor de cada caractere de acordo com os seus valores decimais na tabela ASCII e somaríamos:
 
-C = 67
+A = 65
 
-O = 79
+B = 66
 
-M = 77
+hash(AAAB) = 65 + 65 + 65 + 66 = 261
 
-hash(COM) = 67 + 79 + 77 = 223
+hash(AAAB) = 261
 
-hash(COM) = 223
+A ideia de comparar hashs é justamente comparar o valor do hash do nosso padrão, ou seja, a substring `md AAAB`, com o hash de cada substring no texto `md AAAAAAB`, até acharmos o mesmo valor. 
 
-A ideia de comparar hashs é justamente comparar o valor do hash do nosso padrão, ou seja, a substring `md COM`, com o hash cada substring no texto `md INSPERCOMP`, até acharmos o mesmo valor. 
+;ab
 
-(Hashi eu vou fazer uma animação pra isso mas não deu tempo ainda)
+??? Exercício
+Mas espera, algo me parece estranho nisso aí. Você consegue ver qual é a falha desse sistema?
 
-Mas espera aí, ficar fazendo o cálculo do hash de cada substring caractere por caractere não é igualmente trabalhoso a comparar cada caractere primitivamente? Sim!
+Dica: como são calculados os hashs das substrings?
+
+::: Gabarito
+Puts, mas nesse caso, o computador vai a cada substring fazer a soma, caractere por caractere, dos valores hashs de cada letra. Ficar fazendo essas equações matemáticas é igualmente trabalhoso a comparar cada caractere primitivamente.
+:::
+???
+
+??? Exercício
+
+Baseado na animação acima, pense em uma estratégia para que o algoritmo seja mais eficiente.
+
+Dica: a palavra chave é redundância.
+
+Dica 2: 
+
+![](rolling.jpg)
+
+
+
+::: Gabarito
+A ideia central é, ao invés de calcular e recalcular os hashs em todas as iterações, como estamos resumindo a string a um número, podemos apenas substrair o primeiro termo, e somar o último. Enfim, o rolling hash.
+:::
+???
+
 
 Rolling Hash
 ---------------
@@ -81,27 +132,41 @@ Eita, parece que algo deu errado. Era pra ele ter devolvido o índice 3, mas ele
 :::
 ???
 
-Então você provavelmente percebeu que 'md EVI' e 'md IVE' têm o mesmo hash, quando calculamos só com a tabela ASCII.
+Então você provavelmente percebeu que `md EVI` e `md IVE` têm o mesmo hash, quando calculamos só com a tabela ASCII.
 
 Então vamos consertar isso. Pense nessa próxima implementação, com uma hash function diferente.
 ```md
-hash("COM") =  [ ( [ ( [  (67 × 256) % 101 + 79 ] % 101 ) × 256 ] % 101 ) + 77 ] % 101 = 4
+hash("COM") =  [([([(67 × 256) % 101 + 79] % 101) × 256] % 101) + 77] % 101 = 4
 ```
 
+$$ hash(COM) = [([([(67 × 256) \% 101 + 79] \% 101) × 256 ] \% 101 ) + 77 ] \% 101 = 4$$
+
+(obs: achei que ficou esquisito Hashi, escolha aí qual você prefere mas essa fonte dói meus olhos)
+
 Complicadinha, né? Não vamos entrar muito em detalhe, mas esse é um dos cálculos possíveis do hash que minimiza os erros!
+
+??? Exercício
+Então pensando que a abordagem acima minimiza os erros, deveríamos priorizá-la se comparada à abordagem ingênua?
+
+::: Gabarito
+Depende. Perceba que a função hash complicada **minimiza** os erros, mas como o cálculo é mais complexo, demora mais! Por outro lado, a primeira abordagem está cheia de colisões, mas tem suas vantagens...
+:::
+???
 
 E é aí que aparece a mágica do algoritmo de Rabin-Karp!
 
 
 Podemos enxergar o problema de **duas perspectivas**:
 * O hash é simples e rápido, mas temos chance de erro.
-* O hash pode ser extremamente complexo, mas não temos chance de erro.
+* O hash pode ser extremamente complexo, mas temos pouquíssima chance de erro.
 
 Essas duas abordagens são chamadas de algoritmo de Monte Carlo, e algoritmo de Las Vegas respectivamente.
 
 Monte Carlo: <https://en.wikipedia.org/wiki/Monte_Carlo_algorithm>;
 
 Las Vegas: <https://en.wikipedia.org/wiki/Las_Vegas_algorithm>
+
+A escolha entre um tipo de algoritmo ou outro depende mesmo da aplicação. Se você prioriza mais tempo do que acurácia, o Monte Carlo parece melhor, mas se você prefere maior acurácia com a chance de ser mais lento, entra aí o Las Vegas.
 
 Complexidade
 ---------------
@@ -115,9 +180,11 @@ padrao = "COM"
 M = len(texto)  #  M = 10
 N = len(padrao) #  N = 3
 ``` 
-Nesse caso, que representa basicamente a maioria, o algoritmo irá iterar algumas *X* vezes até o *Hash* da substring se igualar ao do padrão, depois, será iterado *Y* vezes para fazer o "check" *char* a *char*, do primeiro até o primeiro *char* diferente, se não houver nenhum *char* destoante, ele realizará esse loop N vezes. Após essa checagem, ele deve continuar iterando *Z* vezes até a string principal acabar. Seguindo o raciocínio, qual a complexidade nessa situação? 
+
+Se baseie em M e N para calcular a complexidade nessa situação.
 
 :::Dica
+Pense que, no mínimo, precisamos percorrer o texto uma vez.
 Utilize a animação para guiar seu raciocínio.
 
 ;primitivo
@@ -128,6 +195,7 @@ Não é necessário chegar a um resultado exato, mas pelo menos a ordem de compl
 :::
 
 ::: Gabarito
+Nesse caso, o algoritmo irá iterar algumas *X* vezes até o *Hash* da substring se igualar ao do padrão, depois, será iterado *Y* vezes para fazer o "check" *char* a *char*, do primeiro até o primeiro *char* diferente, se não houver nenhum *char* destoante, ele realizará esse loop N vezes. Após essa checagem, ele deve continuar iterando *Z* vezes até a string principal acabar.
 A complexidade é linear *$O(13)$*, *$O(N+M)$*, de ordem *$O(n)$*.
 :::
 
@@ -162,9 +230,34 @@ for i in range(len(padrao)): # IGNORAR ESSE CÓDIGO POR ENQUANTO
 ``` 
 
 ::: Gabarito
-!!! Aviso
-Este é um exemplo de aviso, entre `md !!!`.
-!!!
+``` py
+# calculo do Hash
+def RabinKarp(pat, txt):
+    M = len(pat)
+    N = len(txt)
+    p = 0    
+    t = 0    
+ 
+    for i in range(M):
+        p += (ord(pat[i]))
+        t += (ord(txt[i]))
+
+    for i in range(N-M+1):
+
+        if p==t:
+
+            for j in range(M):
+                if txt[i+j] != pat[j]:
+                    break
+                else: j+=1
+ 
+            if j==M:
+                print("Pattern found at index " + str(i))
+ 
+        if i < N-M:
+            t = (t-ord(txt[i])) + ord(txt[i+M])
+ 
+```
 :::
 
 ???
