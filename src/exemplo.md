@@ -68,7 +68,7 @@ Complicado, o algoritmo iria fazer tantas comparações que ele iria demorar dem
 
 Vamos mudar o método então. Em vez de comparar caractere por caractere entre as strings, vamos comparar os valores hash(i) das strings.
 
-Mas primeiro, pros que não sabem, vamos só definir o que é o valor hash. Cada caractere tem um valor decimal pré-definido (mas não necessariamente universal, existem diversos modos de calcular o hash de uma string), e a soma dos valores de cada caractere da string é o valor hash da string. Por exemplo, podemos usar os valores definidos na tabela ASCII:
+Mas primeiro vamos só definir o que é o valor hash. Cada caractere tem um valor decimal pré-definido (mas não necessariamente universal, existem diversos modos de calcular o hash de uma string), ou seja, vamos resumir a string a um valor, e a soma dos valores de cada caractere da string é o valor hash da string. Por exemplo, podemos usar os valores definidos na tabela ASCII:
 
 ![](ASCII.png)
 
@@ -223,7 +223,8 @@ Nessa seção final, é esperado que haja um desafio para que o aluno aplique os
 
 ??? Parte 1
 ``` py
-# calculo do Hash
+txt = "akjh bvhqregrqyuguiedgfvuyeqrgyfucgeyrgfyregfuygrf8geoygfoaeygfuqgf8ur34grfgeuabhfuGEFP8Haship9fehufhyreeqfygefyegfyewfijhes8gfhtrbgvreqfhubqeyfugeqyfgq8rgf8oqrfyuq7hg9q87uhvg78ugfv7uhgqu87gqyhg7rq0hyg7qyhqg0h70rqgvq0fhvgqfv0vg"
+padrao = "Hashi"
 for i in range(len(padrao)): # IGNORAR ESSE CÓDIGO POR ENQUANTO
     p += (ord(padrao[i]))
     t += (ord(txt[i]))
