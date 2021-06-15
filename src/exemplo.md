@@ -3,7 +3,7 @@ Algoritmo de Rabin-Karp
 
 Introdução
 ----------
-O algoritmo de Rabin-Karp é um algoritmo de procura em strings, que utiliza a técnica de _rolling hash_ para encontrar um padrão em uma string. Ou seja, a ideia é que as entradas sejam o padrão que queremos encontrar e a string que queremos varrer, e a saída é o índice no qual esse padrão aparece na string.
+O algoritmo de Rabin-Karp é um algoritmo de procura de padrões em strings. Ou seja, a ideia é que as entradas sejam o padrão que queremos encontrar e a string que queremos varrer, e a saída é o índice no qual esse padrão aparece na string.
 
 ```py
 def RabinKarp(string, padrão):
@@ -14,13 +14,13 @@ def RabinKarp(string, padrão):
 ??? Exercício
 
 Bom, dito isso vamos ver se deu para entender. Dada uma string
-```
-Mecsol
-```
+
+![](mecs.png)
+
 e um padrão 
-```
-cs
-```
+
+![](cs.png)
+
 qual é a saída esperada do algoritmo?
 ::: Gabarito
 A saída seria o índice no qual o padrão 'cs' aparece na string 'Mecsol', ou seja, 2.
@@ -72,19 +72,23 @@ Mas primeiro vamos só definir o que é o valor hash. Cada caractere tem um valo
 
 ![](ASCII.png)
 
-Para calcular o valor hash de `md AAAB`, por exemplo, calcularíamos o valor de cada caractere de acordo com os seus valores decimais na tabela ASCII e somaríamos:
+Para calcular o valor hash de `md COM`, por exemplo, calcularíamos o valor de cada caractere de acordo com os seus valores decimais na tabela ASCII e somaríamos:
 
-A = 65
+C = 67
 
-B = 66
+O = 79
 
-hash(AAAB) = 65 + 65 + 65 + 66 = 261
+M = 77
 
-hash(AAAB) = 261
 
-A ideia de comparar hashs é justamente comparar o valor do hash do nosso padrão, ou seja, a substring `md AAAB`, com o hash de cada substring no texto `md AAAAAAB`, até acharmos o mesmo valor. 
 
-;ab
+hash(COM) = 67 + 79 + 77 = 223
+
+hash(COM) = 223
+
+A ideia de comparar hashs é justamente comparar o valor do hash do nosso padrão, ou seja, a substring `md COM`, com o hash de cada substring no texto `md INSPERCOMP`, até acharmos o mesmo valor. 
+
+;hash
 
 ??? Exercício
 Mas espera, algo me parece estranho nisso aí. Você consegue ver qual é a falha desse sistema?
@@ -138,10 +142,6 @@ Então vamos consertar isso. Pense nessa próxima implementação, com uma hash 
 ```md
 hash("COM") =  [([([(67 × 256) % 101 + 79] % 101) × 256] % 101) + 77] % 101 = 4
 ```
-
-$$ hash(COM) = [([([(67 × 256) \% 101 + 79] \% 101) × 256 ] \% 101 ) + 77 ] \% 101 = 4$$
-
-(obs: achei que ficou esquisito Hashi, escolha aí qual você prefere mas essa fonte dói meus olhos)
 
 Complicadinha, né? Não vamos entrar muito em detalhe, mas esse é um dos cálculos possíveis do hash que minimiza os erros!
 
