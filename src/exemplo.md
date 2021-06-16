@@ -231,18 +231,87 @@ A escolha entre um tipo de algoritmo ou outro depende mesmo da aplicação. Se v
 
 Desafio
 ---------------
-Nessa seção final, é esperado que haja um desafio para que o aluno aplique os seus conhecimentos sobre o Rabin-Karp, ainda estamos fazendo um "brainstorming" de como podemos realizar isso... por enquanto só decidimos que o desafio vai ser em partes...
+Nessa seção final, é o desafio... Vamos implementar o Algoritmo de Rabin-Karp! Mas não se preocupe, apenas vamos 
+programar uma versão mais "easy".
 
-??? Parte 1
-``` py
-txt = "akjh bvhqregrqyuguiedgfvuyeqrgyfucgeyrgfyregfuygrf8geoygfoaeygfuqgf8ur34grfgeuabhfuGEFP8Haship9fehufhyreeqfygefyegfyewfijhes8gfhtrbgvreqfhubqeyfugeqyfgq8rgf8oqrfyuq7hg9q87uhvg78ugfv7uhgqu87gqyhg7rq0hyg7qyhqg0h70rqgvq0fhvgqfv0vg"
-padrao = "Hashi"
-for i in range(len(padrao)): # IGNORAR ESSE CÓDIGO POR ENQUANTO
-    p += (ord(padrao[i]))
-    t += (ord(txt[i]))
-``` 
+Iniciando, é necessário criar uma função rabin_karp(), qual vai receber o texto em que vai ser procurado nosso padrão, o próprio padrão e nos retornar o índice em que essas colisões acontecem. Para seguir com as nossas instruções será necessário rodar esse código em **Python**, se quiser programar em outra linguagem não tem problema, apenas não garantimos o resultado final.
+
+
+
+??? Desafio
+
+***Parte 1***
+
+A ***def*** deve seguir esse esqueleto:
+```
+def RabinKarp(pat, txt):
+    M = len(pat)
+    N = len(txt)
+    p = 0    
+    t = 0    
+```
+Onde "p" e "t" são variáveis que devem acumular o valor do hash do padrão a ser procurado e texto, respectivamente.
+O primeiro exercício consta em fazer o cálculo de hash! Sugerimos que faça um loop e que use a função ***ord()*** para saber o hash de cada caractere.
 
 ::: Gabarito
+
+O loop deve estar de acordo, não precisa ser igual, com o código abaixo:
+
+``` py
+for i in range(M):
+    p += (ord(pat[i]))
+    t += (ord(txt[i]))
+
+``` 
+:::
+
+***Parte 2***
+
+Agora vamos fazer o "coração do código", usar o hash calculado para comparar e caso achar, "printar" o índice deste achado!
+Para isso, basta criar um loop que deve rodar para todos os caracteres do texto, logo que uma vez o primeiro hash calculado, agora é só adicionar e retirar o hash do caractere novo e anterior, respectivamente.
+Nessa parte, foque em criar o loop e o mecanismo de identificação de padrões, isto é, quando houver uma colisão (hash do padrão for igual ao do texto).
+
+::: Dica
+    
+Lembre-se que como o primeiro hash já foi calculado, não precisamos iterar as primeiras M (comprimento do padrão) vezes
+
+::: Dica do range do for
+faça um *for in range(***N-M+1***)*
+***N-M*** porque não precisamos dessas primeiras ***M*** vezes e ***+ 1*** porque o código tem que ser capaz de pegar o hash do próximo caractere, caso não tenha esse ***+1*** não vamos conseguir calcular o último hash.
+:::
+
+:::
+
+::: Gabarito parte 2
+``` py
+for i in range(N-M+1):
+
+        if p==t:
+
+            for j in range(M):
+                if txt[i+j] != pat[j]:
+                    break
+                else: j+=1
+ 
+            if j==M:
+                print("Achei! Está no índice " + str(i))
+```
+:::
+
+***Parte 3***
+
+Se não achar nada, deve fazer o rolling hash do próximo e segue o jogo!
+Para isso, no loop da parte 2, inclua o mecanismo que calcula o rolling hash, que resumidamente é subtrair o hash do caractere mais antigo e adicionar o hash do caractere mais novo!
+
+::: Gabarito parte 3
+``` py
+if i < N-M:
+   t = (t-ord(txt[i])) + ord(txt[i+M])
+```
+:::
+
+
+::: Gabarito geral
 ``` py
 # calculo do Hash
 def RabinKarp(pat, txt):
@@ -265,7 +334,7 @@ def RabinKarp(pat, txt):
                 else: j+=1
  
             if j==M:
-                print("Pattern found at index " + str(i))
+                print("Achei! Está no índice " + str(i))
  
         if i < N-M:
             t = (t-ord(txt[i])) + ord(txt[i+M])
