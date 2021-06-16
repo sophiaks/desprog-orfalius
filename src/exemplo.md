@@ -244,7 +244,7 @@ Iniciando, é necessário criar uma função rabin_karp(), qual vai receber o te
 
 A ***def*** deve seguir esse esqueleto:
 ```
-def RabinKarp(pat, txt):
+def rabin_karp(pat, txt):
     M = len(pat)
     N = len(txt)
     p = 0    
@@ -314,7 +314,7 @@ if i < N-M:
 ::: Gabarito geral
 ``` py
 # calculo do Hash
-def RabinKarp(pat, txt):
+def rabin_karp(pat, txt):
     M = len(pat)
     N = len(txt)
     p = 0    
@@ -340,6 +340,34 @@ def RabinKarp(pat, txt):
             t = (t-ord(txt[i])) + ord(txt[i+M])
  
 ```
+:::
+::: Teste
+Para testar se sua função está correta, utilize as seguintes entradas e chamadas:
+``` py
+txt = "dfjnviwfbwgvuiwbrfug3obu3obrfgheguyigb3yirfbvgfyvy73rvby7r3tbvy73rbvy73fbeurfbwy7gvg2y7rg \
+       eerwreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedfssbdfyusbfuysyfusbfusydfbfdybfydfsdfsdbfuysfyusbfdbf \
+       fergergergrgrgrgrgrgrC0Mgrgrgffbaubvwfvuvbuibvuwbfivyfbwyuibvuywbfvyuwvbuwbyvudbwibfyuwvbfuywbvu \
+       fvduwivbviuvfyubvwyuibdviyubwfvbiuwbyrfbvyrweybvyurwbvwuyivbrvbiyuwbvuwbvuriwyviwvyrwvburbvyurvuye \
+       rfeubvubvyubyvbrwyvbyebv7ebe7grvywegc7wHashigc67wg6ge6f6efr6w7fr67efr7w6fer6fwe67frw67rfewfr7fwe67rfwe7 \
+       wfbweubewubeufbfeyfwuefywefyuwehwed90weuf9euf9euf9euf9euf9euf8efu8euf8ru8fu8u8vu8uf8ef8fe8fu8ef8eu \
+       ctucrcrrdrdextgfygeryiuhregurtuhhtrughruhguthguthughtughtughtughtughtughtughtughtughtguthgtughuthut \
+       wyuiregfyegcwy7geft7qegbqwghdgqwvegqfgweqvwdtgew8frhg8ruhg8ehsuhgw9yhgruigifdjgidfjidj8eujiwjtuh3ujo \
+       tfyreyfrfvwhbqifvebqehfbhrbhbfhebfybeyfbhbfsbhfbhdbfgsbdfhbdgbfgedvfywgfyg3fgtwgfe6ge6gefgtegfegf6 \
+       dfjnviwfbwgvuiwbrfug3obu3obrfgheguyigb3yirfbvgfyvy73rvby7r3tbvy73rbvy73fbeurfbwy7gvg2y7rg \
+       eerwreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedfssbdfyusbfuysyfusbfusydfbfdybfydfsdfsdbfuysfyusbfdbf \
+       fergergergrgrgrgrgrgrCOMgrgrgffbaubvwfvuvbuibvuwbfivyfbwyuibvuywbfvyuwvbuwbyvudbwiwbvu \
+       fvduwivbviuvfyubvwyuibdviyubwfvbiuwbyrfbvyrweybvyurwbvwuyivbrvbiyuwbvuwbvuriwyviwvyrwvburbvyurvuye \
+       rfeubvubvyubyvbrwyvbyebv7ebe7grvywegc7wgc67wg6ge6f6efr6w7fr67efr7w6fer6fwe67frw67rferfwe7 \
+       wfbweubewubeufbfeyfwuefyweHashifyuwehwed90weuf9euf9euf9euf9euf9euf8efu8euf8ru8fu8u8vu8uf8efeu \
+       ctucrcrrdrdextgfygeryiuhregurtuhhtrughruhguthguthughtughtughtughtughtughtughtughtughtguthgtughuthut \
+       wyuiregfyegcwy7geft7qegbqwghdgqwvegqfgweqvwdtgHashiew8frhg8ruhg8ehsuhgw9yhgruigifdjgidfjidj8eujo \
+       tfyreyfrfvwhbqifvebqehfbhrbhbfhebfybeyfbhbfsbhfbhdbfgsbdfhbdgbfgedvfywgfyg3fgtwgfe6ge6gefgtegC0M"
+pat = "COM"
+ 
+# Function Call
+rabin_karp(pat,txt)
+```
+A função deve retornar o índice 1165!
 :::
 
 ???
