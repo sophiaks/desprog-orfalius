@@ -113,7 +113,7 @@ Dica 2:
 
 
 ::: Gabarito
-A ideia central é, ao invés de calcular e recalcular os hashs em todas as iterações, como estamos resumindo a string a um número, podemos apenas substrair o primeiro termo, e somar o último. Enfim, o rolling hash.
+A ideia central é, ao invés de calcular e recalcular os hashs em todas as iterações, como estamos resumindo a string a um número, podemos apenas substrair o primeiro termo, e somar o último. Enfim, o rolling hash. Se você não entendeu direito, a gente vai explicar melhor aqui em baixo, segue o fio.
 :::
 ???
 
@@ -143,7 +143,7 @@ Então vamos consertar isso. Pense nessa próxima implementação, com uma hash 
 hash("COM") =  [([([(67 × 256) % 101 + 79] % 101) × 256] % 101) + 77] % 101 = 4
 ```
 
-Complicadinha, né? Não vamos entrar muito em detalhe, mas esse é um dos cálculos possíveis do hash que minimiza os erros!
+Complicadinha, né? Não vamos entrar muito em detalhe, mas esse é um dos cálculos possíveis do hash que minimiza os erros! Você não precisa entender como ela funciona, é só um exemplo de como a função pode ficar mais complicada (e, consequentemente, mais precisa).
 
 
 
@@ -199,15 +199,17 @@ Uma vez que vão ter 4 iterações para todas *substrings* do texto, conclui-se 
 Beleza, agora para a cereja em cima do bolo!
 
 ??? Exercício
-O que acontece em termos de complexidade e acurácia do algoritmo quando confiamos no hash? Ou seja, não vamos nos importar se ele dá um resultado correto, e a função não precisa ser complicada.
+O que acontece em termos de complexidade e acurácia do algoritmo quando confiamos no hash? Ou seja, quando confiamos que duas substrings que tem o mesmo valor hash são iguais sem fazer algum tipo de confirmação?
+
+Obs: não precisa calcular a complexidade, só falar o que você acha que acontece.
 
 ::: Gabarito
-Podemos dizer que a complexidade não será o pior caso, já que não temos que iterar novamente sobre a string, mas por outro lado a acurácia também diminui, já que não temos a garantia de rever os caracteres e confirmar se realmente são iguais.
+Podemos dizer que a complexidade não será o pior caso, já que não temos que iterar novamente sobre a string, mas por outro lado a acurácia também diminui, já que não temos a garantia de rever os caracteres e confirmar se realmente são iguais. Vimos isso anteriormente no caso do `md EVI` e `md IVE`.
 :::
 ???
 
 ??? Exercício
-O que acontece em termos de complexidade e acurácia do algoritmo quando não confiamos no hash e adicionamos iterações para que o algoritmo retorne o valor correto sempre?
+O que acontece em termos de complexidade e acurácia do algoritmo quando não confiamos no hash e adicionamos confirmações para que o algoritmo retorne o valor correto sempre?
 
 ::: Gabarito
 Como temos que iterar mais vezes sobre a string, a complexidade aumenta e a acurária aumenta também!
@@ -229,7 +231,7 @@ Las Vegas: <https://en.wikipedia.org/wiki/Las_Vegas_algorithm>
 A escolha entre um tipo de algoritmo ou outro depende mesmo da aplicação. Se você prioriza mais tempo do que acurácia, o Monte Carlo parece melhor, mas se você prefere maior acurácia com a chance de ser mais lento, entra aí o Las Vegas.
 
 
-Desafio (Opional)
+Desafio (Opcional)
 ---------------
 Nessa seção final, é o desafio... Vamos implementar o Algoritmo de Rabin-Karp! Mas não se preocupe, apenas vamos 
 programar uma versão mais "easy".
