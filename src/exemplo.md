@@ -229,7 +229,7 @@ Las Vegas: <https://en.wikipedia.org/wiki/Las_Vegas_algorithm>
 A escolha entre um tipo de algoritmo ou outro depende mesmo da aplicação. Se você prioriza mais tempo do que acurácia, o Monte Carlo parece melhor, mas se você prefere maior acurácia com a chance de ser mais lento, entra aí o Las Vegas.
 
 
-Desafio
+Desafio (Opional)
 ---------------
 Nessa seção final, é o desafio... Vamos implementar o Algoritmo de Rabin-Karp! Mas não se preocupe, apenas vamos 
 programar uma versão mais "easy".
