@@ -238,7 +238,7 @@ Iniciando, é necessário criar uma função rabin_karp(), qual vai receber o te
 
 
 
-??? Desafio
+??? Desafio (Opcional)
 
 ***Parte 1***
 
