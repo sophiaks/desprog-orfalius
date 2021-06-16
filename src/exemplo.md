@@ -145,28 +145,7 @@ hash("COM") =  [([([(67 × 256) % 101 + 79] % 101) × 256] % 101) + 77] % 101 = 
 
 Complicadinha, né? Não vamos entrar muito em detalhe, mas esse é um dos cálculos possíveis do hash que minimiza os erros!
 
-??? Exercício
-Então pensando que a abordagem acima minimiza os erros, deveríamos priorizá-la se comparada à abordagem ingênua?
 
-::: Gabarito
-Depende. Perceba que a função hash complicada **minimiza** os erros, mas como o cálculo é mais complexo, demora mais! Por outro lado, a primeira abordagem está cheia de colisões, mas tem suas vantagens...
-:::
-???
-
-E é aí que aparece a mágica do algoritmo de Rabin-Karp!
-
-
-Podemos enxergar o problema de **duas perspectivas**:
-* O hash é simples e rápido, mas temos chance de erro.
-* O hash pode ser extremamente complexo, mas temos pouquíssima chance de erro.
-
-Essas duas abordagens são chamadas de algoritmo de Monte Carlo, e algoritmo de Las Vegas respectivamente.
-
-Monte Carlo: <https://en.wikipedia.org/wiki/Monte_Carlo_algorithm>;
-
-Las Vegas: <https://en.wikipedia.org/wiki/Las_Vegas_algorithm>
-
-A escolha entre um tipo de algoritmo ou outro depende mesmo da aplicação. Se você prioriza mais tempo do que acurácia, o Monte Carlo parece melhor, mas se você prefere maior acurácia com a chance de ser mais lento, entra aí o Las Vegas.
 
 Complexidade
 ---------------
@@ -208,7 +187,7 @@ N = len(padrao) #  N = 4
 ``` 
 Esse é o pior caso, porém o cálculo de sua complexidade é bem mais trivial.
 ::: Gabarito
-Uma vez que vão ter 4 iterações para todas *substrings* do texto, conclui-se que a complexidade é exponencial *$O(N*M)$*, de ordem *$O(n²)$*. 
+Uma vez que vão ter 4 iterações para todas *substrings* do texto, conclui-se que a complexidade é exponencial *$O(N*M)$*, de ordem *$O(NM)$*. 
 
 ::: Tabela de Complexidades
 |                   | melhor caso | caso médio | pior caso  |
@@ -216,6 +195,39 @@ Uma vez que vão ter 4 iterações para todas *substrings* do texto, conclui-se 
    **Rabin-Karp**   |   *$O(n)$*  |  *$O(n)$*  |  *$O(n²)$* |
 :::
 ???
+
+Beleza, agora para a cereja em cima do bolo!
+
+??? Exercício
+O que acontece em termos de complexidade e acurácia do algoritmo quando confiamos no hash? Ou seja, não vamos nos importar se ele dá um resultado correto, e a função não precisa ser complicada.
+
+::: Gabarito
+Podemos dizer que a complexidade não será o pior caso, já que não temos que iterar novamente sobre a string, mas por outro lado a acurácia também diminui, já que não temos a garantia de rever os caracteres e confirmar se realmente são iguais.
+:::
+???
+
+??? Exercício
+O que acontece em termos de complexidade e acurácia do algoritmo quando não confiamos no hash e adicionamos iterações para que o algoritmo retorne o valor correto sempre?
+
+::: Gabarito
+Como temos que iterar mais vezes sobre a string, a complexidade aumenta e a acurária aumenta também!
+:::
+???
+
+E é aí que aparece a mágica do algoritmo de Rabin-Karp!
+
+Podemos enxergar o problema de **duas perspectivas**:
+* O hash é simples e rápido, mas temos chance de erro.
+* O hash pode ser extremamente complexo, mas temos pouquíssima chance de erro.
+
+Essas duas abordagens são chamadas de algoritmo de Monte Carlo, e algoritmo de Las Vegas respectivamente.
+
+Monte Carlo: <https://en.wikipedia.org/wiki/Monte_Carlo_algorithm>;
+
+Las Vegas: <https://en.wikipedia.org/wiki/Las_Vegas_algorithm>
+
+A escolha entre um tipo de algoritmo ou outro depende mesmo da aplicação. Se você prioriza mais tempo do que acurácia, o Monte Carlo parece melhor, mas se você prefere maior acurácia com a chance de ser mais lento, entra aí o Las Vegas.
+
 
 Desafio
 ---------------
@@ -262,6 +274,5 @@ def RabinKarp(pat, txt):
 :::
 
 ???
-
 
 
